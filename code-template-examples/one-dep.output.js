@@ -1,0 +1,1 @@
+import varName from 'moduleName'
