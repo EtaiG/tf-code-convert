@@ -2,7 +2,7 @@ import fs from "fs";
 import { buildInput, buildOutput } from "./code-builder.js";
 import { generateData } from "./data-generator.js";
 
-const data = generateData(10);
+const data = generateData(1);
 
 const result = [];
 for (const lineData of data) {
@@ -12,4 +12,4 @@ for (const lineData of data) {
   result.push(`{"prompt": "${input}", "completion": "${output}"}`);
 }
 
-fs.writeFileSync("dataset.jsonl", result.join("\n"));
+fs.writeFileSync("tests.jsonl", result.join("\n"));

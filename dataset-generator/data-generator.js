@@ -49,15 +49,17 @@ const getRandomDependency = (dependenciesArr, i) => {
   return dependency;
 };
 
-const generateDependencies = () => {
+const generateDependencies = ({depNames, depModules} = {}) => {
+  const dependencyModules = depModules || DEPENDENCY_MODULES
+  const dependencyNames = depNames || DEPENDENCY_NAMES
   const dependenciesCount = Math.floor(
-    Math.random() * DEPENDENCY_MODULES.length
+    Math.random() * dependencyModules.length
   );
 
   const dependencies = [];
   for (let i = 0; i < dependenciesCount; i++) {
-    const name = getRandomDependency(DEPENDENCY_NAMES, i);
-    const module = getRandomDependency(DEPENDENCY_MODULES, i);
+    const name = getRandomDependency(dependencyNames, i);
+    const module = getRandomDependency(dependencyModules, i);
     dependencies.push({ name, module });
   }
 
@@ -76,15 +78,15 @@ const generateCode = () => {
   return code.join("\\n");
 };
 
-const generateSingleData = () => ({
-  dependencies: generateDependencies(),
+const generateSingleData = (options) => ({
+  dependencies: generateDependencies(options),
   code: generateCode(),
 });
 
-export const generateData = (linesCount) => {
+export const generateData = (linesCount, options) => {
   const data = [];
   for (let i = 0; i < linesCount; i++) {
-    data.push(generateSingleData());
+    data.push(generateSingleData(options));
   }
 
   return data;
