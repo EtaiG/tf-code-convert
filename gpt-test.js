@@ -8,10 +8,10 @@ const readJsonL = filePath => {
     const lines = fileContents.split('\n')
     return lines.map(l => l ? JSON.parse(l) : l).filter(l => l)
 }
-const training = readJsonL('./dataset-generator/dataset-training_prepared.jsonl')
-const validation = readJsonL('./dataset-generator/dataset-validation_prepared.jsonl')
+const training = readJsonL('./dataset-generator/code-training.jsonl')
+const validation = readJsonL('./dataset-generator/code-validation.jsonl')
 
-const userConfig = apiConfig.user1
+const userConfig = apiConfig.user2
 //trying to make sure openAPI automatic key recognition does not see we have this key committed in public repo
 const configuration = new Configuration({
     apiKey: userConfig.apiKey.join('')
@@ -34,17 +34,19 @@ const dataSet = {
     training, validation
 }
 
+//TOTAL training = 700 validation = 70
+
 // const type = 'training'
 const type = 'validation'
-const index = 237
+const index = 66
 const {prompt, completion} = dataSet[type][index]
 
 const response = await openai.createCompletion({
-    model: userConfig.model2,
+    model: userConfig.model1,
     prompt,
     temperature: 0.5,
-    stop: '\n\n',
-    max_tokens: 516,
+    stop: '####',
+    max_tokens: 1300,
 });
 const result = response.data.choices[0]
 console.log('prompt')
@@ -55,5 +57,6 @@ console.log(result)
 fsExtra.outputFileSync(path.resolve(`./completions/${type}-${index}.json`), JSON.stringify({
     prompt,
     expected: completion,
-    result
+    result,
+    pass: result.text === completion.replace(/####/gm, '')
 }))

@@ -7,8 +7,8 @@
     "apiKey": ["sk-", "ZPi", "Eau", "HXtbfCcOz", "ONQ", "X8T3Blb", "kFJwpt12R", "X0AoK", "OXEec", "ExM8"]
   },
   "user2": {
-    "fine-tune-training-1": "",
-    "model1": "",
+    "fine-tune-training-1": "ft-ZSHdrFHOtgeF9mSn0lOhjUHz",
+    "model1": "curie:ft-personal-2022-06-19-16-06-03",
     "apiKey": ["sk-T", "tCZ8", "6oS6", "Zxy", "l5nf", "LHhzT", "3BlbkF", "JHlo6", "nQ7PB", "0TBmxq", "3FK04"]
   }
 }
