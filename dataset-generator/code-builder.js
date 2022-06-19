@@ -1,7 +1,7 @@
 const replaceForbiddenChars = (str) =>
   str.replace(/\n/g, "\\n").replace(/"/g, '\\"');
 
-export const buildInput = ({ dependencies, code }) =>
+export const buildInput = ({ dependencies, code = '' }) =>
   replaceForbiddenChars(
     `define([${dependencies
       .map(({ module }) => `'${module}'`)
@@ -10,7 +10,7 @@ export const buildInput = ({ dependencies, code }) =>
       .join(",")}){\n${code}\n})`
   );
 
-export const buildOutput = ({ dependencies, code }) =>
+export const buildOutput = ({ dependencies, code = '' }) =>
   replaceForbiddenChars(
     `${dependencies
       .map(({ name, module }) => `import ${name} from '${module}'`)
