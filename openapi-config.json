@@ -1,4 +1,14 @@
 {
-  "fine-tune-training-1": "ft-ktI9k4DBRWh39Kiqz4PpWS5j",
-  "fine-tune-model-1": "curie:ft-personal-2022-06-19-08-20-28"
+  "user1": {
+    "fine-tune-training-1": "ft-ktI9k4DBRWh39Kiqz4PpWS5j",
+    "fine-tune-training-2": "ft-CnkcdB9F80EmhygPsEFcbcJ2",
+    "model1": "curie:ft-personal-2022-06-19-08-20-28",
+    "model2": "curie:ft-personal-2022-06-19-11-36-42",
+    "apiKey": ["sk-", "ZPi", "Eau", "HXtbfCcOz", "ONQ", "X8T3Blb", "kFJwpt12R", "X0AoK", "OXEec", "ExM8"]
+  },
+  "user2": {
+    "fine-tune-training-1": "",
+    "model1": "",
+    "apiKey": ["sk-T", "tCZ8", "6oS6", "Zxy", "l5nf", "LHhzT", "3BlbkF", "JHlo6", "nQ7PB", "0TBmxq", "3FK04"]
+  }
 }

@@ -1,15 +1,23 @@
 import { Configuration, OpenAIApi } from "openai";
 import fsExtra from 'fs-extra'
 import path from 'path'
+const apiConfig = fsExtra.readJsonSync('./openapi-config.json')
 
+const readJsonL = filePath => {
+    const fileContents = fsExtra.readFileSync(filePath, 'utf-8')
+    const lines = fileContents.split('\n')
+    return lines.map(l => l ? JSON.parse(l) : l).filter(l => l)
+}
+const training = readJsonL('./dataset-generator/dataset-training_prepared.jsonl')
+const validation = readJsonL('./dataset-generator/dataset-validation_prepared.jsonl')
+
+const userConfig = apiConfig.user1
 //trying to make sure openAPI automatic key recognition does not see we have this key committed in public repo
-const apiKey1 = ['sk-', 'ZPi', 'Eau', 'HXtbfCcOz']
-const apiKey2 = ['ONQ', 'X8T3Blb', 'kFJwpt12R', 'X0AoK', 'OXEec', 'ExM8']
 const configuration = new Configuration({
-    apiKey: apiKey1.concat(apiKey2).join('')
+    apiKey: userConfig.apiKey.join('')
 });
 const openai = new OpenAIApi(configuration);
-const prompt = 'define([\'abc\', \'foo/bar\', \'@org/module/src/calc\', \'awesome-sauce\'], function(abc, bar, calc, awesomeSauce){\n' +
+const old_prompt = 'define([\'abc\', \'foo/bar\', \'@org/module/src/calc\', \'awesome-sauce\'], function(abc, bar, calc, awesomeSauce){\n' +
     '    const initData = abc.doSomething()\n' +
     '    bar.registerAdditionalShit(z => {\n' +
     '        calc.multiply(initData.x, initData.y, z)\n' +
@@ -21,16 +29,31 @@ const prompt = 'define([\'abc\', \'foo/bar\', \'@org/module/src/calc\', \'awesom
     '        trigger\n' +
     '    }\n' +
     '})\n'
+
+const dataSet = {
+    training, validation
+}
+
+// const type = 'training'
+const type = 'validation'
+const index = 160
+const {prompt, completion} = dataSet[type][index]
+
 const response = await openai.createCompletion({
-    model: "curie:ft-personal-2022-06-19-08-20-28",
+    model: userConfig.model2,
     prompt,
     temperature: 0.5,
-    max_tokens: 1024,
+    stop: '\n\n',
+    max_tokens: 516,
 });
 const result = response.data.choices[0]
+console.log('prompt')
+console.log(prompt)
+console.log('result')
 console.log(result)
 
-fsExtra.outputFileSync(path.resolve('./completions/example5.json'), JSON.stringify({
+fsExtra.outputFileSync(path.resolve(`./completions/${type}-${index}.json`), JSON.stringify({
     prompt,
+    expected: completion,
     result
 }))
