@@ -36,7 +36,7 @@ const dataSet = {
 
 // const type = 'training'
 const type = 'validation'
-const index = 160
+const index = 237
 const {prompt, completion} = dataSet[type][index]
 
 const response = await openai.createCompletion({
